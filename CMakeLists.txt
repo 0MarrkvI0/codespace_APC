@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.25)
-project(APCProject LANGUAGES CXX)
+project(APC_Project_MINIDRIVE LANGUAGES CXX)
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # Use C++23 standard
 set(CMAKE_CXX_STANDARD 23)
@@ -23,9 +25,10 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
 )
 endif()
 
-# Add executable
-add_executable(${PROJECT_NAME} main.cpp)
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/external")
+include(Dependencies)
 
-# Add threading support
-find_package(Threads REQUIRED)
-target_link_libraries(${PROJECT_NAME} PRIVATE Threads::Threads)
+# Subprojects
+add_subdirectory(common)
+add_subdirectory(server)
+add_subdirectory(client)
